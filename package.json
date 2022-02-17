@@ -1,0 +1,23 @@
+{
+  "name": "archaeojs",
+  "version": "1.0.0",
+  "description": "Archaeo again, but this time, in JS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jackdixonryan/ArchaeoJS.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jackdixonryan/ArchaeoJS/issues"
+  },
+  "homepage": "https://github.com/jackdixonryan/ArchaeoJS#readme",
+  "devDependencies": {
+    "@types/node": "^17.0.18",
+    "typescript": "^4.5.5"
+  }
+}
