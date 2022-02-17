@@ -1,4 +1,4 @@
-import { CharacterOptions } from "../types";
+import { CharacterOptions } from "../../types";
 
 class Character {
   name: string;
