@@ -10,6 +10,7 @@ class Page {
   resources: any[];
   name: string;
   location: string;
+  
   constructor(options: PageOptions) {
     const { resources, name, location } = options;
     this.resources = resources || [];

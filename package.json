@@ -4,7 +4,9 @@
   "description": "Archaeo again, but this time, in JS",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jasmine",
+    "dev": "ts-node ./src/api/index && npm run start-app",
+    "start-app": "npm run dev --prefix ./src/interface"
   },
   "repository": {
     "type": "git",
@@ -17,7 +19,22 @@
   },
   "homepage": "https://github.com/jackdixonryan/ArchaeoJS#readme",
   "devDependencies": {
+    "@types/cors": "^2.8.12",
+    "@types/express": "^4.17.13",
+    "@types/jasmine": "^3.10.3",
+    "@types/morgan": "^1.9.3",
     "@types/node": "^17.0.18",
+    "jasmine": "^4.0.2",
     "typescript": "^4.5.5"
+  },
+  "dependencies": {
+    "@babel/core": "^7.17.5",
+    "@babel/register": "^7.17.0",
+    "babel-preset-react-app": "^10.0.1",
+    "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
+    "express": "^4.17.3",
+    "helmet": "^5.0.2",
+    "morgan": "^1.10.0"
   }
 }
