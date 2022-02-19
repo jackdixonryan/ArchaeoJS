@@ -1,6 +1,6 @@
 import { CharacterOptions, SkillMatrix } from "../../../types";
 import { xpToLevel } from "../../utility/xp";
-import Inventory from "./Inventory";
+import Inventory from "./inventory";
 
 class User {
   name: string;
