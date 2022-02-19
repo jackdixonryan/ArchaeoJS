@@ -1,11 +1,11 @@
 
-export type CharacterOptions = { 
+export interface CharacterOptions { 
   name: string;
   email: string;
   skillMatrix?: SkillMatrix;
 }
 
-export type Daemon = {
+export interface Daemon {
   name: string;
   id: string;
   level: number;
@@ -20,6 +20,28 @@ export type Daemon = {
   description: string;
 }
 
-export type SkillMatrix = {
+export interface SkillMatrix {
   [key: string]: number
+}
+
+export interface ResourceType {
+  requiredLevel: number;
+  xp: number;
+  name: string;
+  timeToComplete: number;
+}
+
+export interface HarvestableType extends ResourceType {
+  yields: Yield[];
+}
+
+export interface Yield { 
+  item: Item;
+  quantity: number;
+  probabilityToLoot: number;
+}
+
+export interface Item {
+  itemId: string;
+  name: string; 
 }

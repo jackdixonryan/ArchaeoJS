@@ -4,14 +4,14 @@ import User from "../user";
 import Mineable from "./mineable";
 
 type PageOptions = {
-  resources?: any[];
+  resources?: Mineable[];
   name: string;
   type: string;
   user: User;
 }
 
 class Page {
-  resources: any[];
+  resources: Mineable[];
   name: string;
   location: string;
   type: PageType;

@@ -9,7 +9,7 @@ let mainframe: Mainframe;
 
 beforeEach(() => {
 
-  jasmine.DEFAULT_TIMEOUT_INTERVAL = 100000;
+  jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
 
   user = new User({
     email: "jack@mainframe.org",

@@ -1,16 +1,19 @@
 import { CharacterOptions, SkillMatrix } from "../../../types";
 import { xpToLevel } from "../../utility/xp";
+import Inventory from "./Inventory";
 
 class User {
   name: string;
   email: string;
   title: string|null;
   skillMatrix: SkillMatrix;
+  inventory: Inventory;
   constructor(options: CharacterOptions) {
     const { name, email, skillMatrix } = options;
     this.name = name;
     this.email = email;
     this.title = null;
+    this.inventory = new Inventory();
     if (skillMatrix) {
       this.skillMatrix = skillMatrix; 
     } else {
