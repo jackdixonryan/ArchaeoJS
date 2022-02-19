@@ -19,7 +19,7 @@ class Page {
   xpForConstruction: number;
   
   constructor(options: PageOptions) {
-    const { resources, name, type, user } = options;
+    const { name, type, user } = options;
 
     const pageType = types.find((presetType) => presetType.name === type);
     if (!pageType) {
@@ -28,14 +28,23 @@ class Page {
       this.type = pageType;
     }
 
-    if (user.getLevels()["webmaster"] < this.type.requiredLevel) {
-      throw new Error("The user is not a high enough level to harvest this resource.");
+    if (user.getLevels()["webmastering"] < this.type.requiredLevel) {
+      throw new Error("INSUFFICIENT_LEVEL");
     } else { 
-      this.resources = resources || [];
       this.name = name; 
       this.location = generateId();
       this.userId = user.name;
       this.xpForConstruction = pageType.xp;
+      
+      // generate the resources on the page.
+
+      const resourceMax = Math.ceil(pageType.resourceMax);
+      const resourceMin = Math.floor(pageType.resourceMin);
+      const randomResourceAmount = Math.floor(Math.random() * (resourceMax - resourceMin + 1)) + resourceMin;
+
+      this.resources = [];
+      this.addRandomMineables(randomResourceAmount);
+      
     }
   }
 

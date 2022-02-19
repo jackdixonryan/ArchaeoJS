@@ -2,13 +2,12 @@
 // test specification: A user signs in, discovers a new mainframe, and creates a page. 
 import User from "../src/game/lib/user";
 import Mainframe from "../src/game/lib/mainframe";
-import { SkillMatrix } from "../src/types";
 import Page from "../src/game/lib/resources/page";
 
 let user: User; 
 let mainframe: Mainframe;
 
-beforeAll(() => {
+beforeEach(() => {
 
   jasmine.DEFAULT_TIMEOUT_INTERVAL = 100000;
 
@@ -41,18 +40,47 @@ describe("A new user arrives on the mainframe.", () => {
 describe("The user, for lack of any other options, creates a new page in the mainframe.", () => {
   let page: Page;
 
-  beforeAll(async () => {
+  it("Creates the new page and adds it to the mainframe.", async () => {
     page = await mainframe.addPage(user, "basic", { name: "" });
     user.addXp("webmastering", page.xpForConstruction);
-  });
-
-  it("Creates the new page and adds it to the mainframe.", () => {
-    expect(mainframe.pages.length).toBe(1);
+    expect(mainframe.pages.length).not.toBe(0);
     expect(mainframe.pages.find((mfPage) => mfPage.location === page.location)).not.toBeUndefined();
   }); 
 
-  it("Compensates the user with webmastering xp.", () => {
+  it("Compensates the user with webmastering xp.", async () => {
+    page = await mainframe.addPage(user, "basic", { name: "" });
+    // this is implementation code. Needs to be extracted.
+    user.addXp("webmastering", page.xpForConstruction);
     expect(user.skillMatrix["webmastering"]).not.toBe(0);
+  });
+});
+
+describe("The user enjoys creating pages! They want to create a better one.", () => {
+  let ambitiousUser: User;
+
+  beforeAll(() => {
+    ambitiousUser = new User({ 
+      name: "ambition",
+      email: "YEAH"
+    });
+  });
+
+  it("Doesn't let them, because they're just not good enough yet.", async () => {
+    await expectAsync(mainframe.addPage(ambitiousUser, "portal", { name: "" })).toBeRejectedWith(new Error("INSUFFICIENT_LEVEL"));
+  });
+
+  it("lets them train, though!", async () => {
+    for (let i = 0; i < 10; i++) {
+      const page = await mainframe.addPage(ambitiousUser, "basic", { name: "" });
+      ambitiousUser.addXp("webmastering", page.xpForConstruction);
+    }
+    expect(ambitiousUser.getLevels()["webmastering"]).toBe(9);
+  });
+
+  it("will now permit them, having levelled up their webmastering, to create more advanced pages.", async () => {
+    const page = await mainframe.addPage(ambitiousUser, "portal", { name: "" });
+    ambitiousUser.addXp("webmastering", page.xpForConstruction);
+    expect(ambitiousUser.skillMatrix["webmastering"]).toBe(1105);
   });
 });
 
