@@ -1,10 +1,3 @@
-import crypto from "crypto";
-
-export function generateId(): string {
-  const id = crypto.randomBytes(16).toString("hex");
-  return id;
-}
-
 export function xpToLevel(xp: number): number {
   const tree: number[] = fullXPTree();
   for (let i = 0; i < tree.length; i++) {
@@ -44,4 +37,3 @@ function fullXPTree(): number[] {
   return levels;
 
 }
-

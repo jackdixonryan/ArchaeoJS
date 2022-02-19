@@ -1,11 +1,11 @@
-import { CharacterOptions, SkillMatrix } from "../../types";
-import { xpToLevel } from "../../utility";
+import { CharacterOptions, SkillMatrix } from "../../../types";
+import { xpToLevel } from "../../utility/xp";
 
 class User {
   name: string;
   email: string;
   title: string|null;
-  skillMatrix?: SkillMatrix;
+  skillMatrix: SkillMatrix;
   constructor(options: CharacterOptions) {
     const { name, email, skillMatrix } = options;
     this.name = name;
@@ -44,14 +44,10 @@ class User {
 
     return levelMatrix;
   }
+
+  addXp(skill: string, amount: number): void { 
+    this.skillMatrix[skill] += amount;
+  }
 }
-
-const u = new User({
-  email: "j",
-  name: "A",
-});
-
-console.log(u.getLevels());
-
 
 export default User;
