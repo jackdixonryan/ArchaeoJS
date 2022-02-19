@@ -1,13 +1,9 @@
+import { ResourceType } from "../../types";
 
-export type PageType = {
-  requiredLevel: number;
-  xp: number;
-  name: string;
-  timeToComplete: number;
+export interface PageType extends ResourceType {
   resourceMin: number;
   resourceMax: number;
 }
-
 
 export const types: PageType[] = [ 
   {

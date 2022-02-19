@@ -1,33 +1,24 @@
-import { generateId } from "../../utility"
+import { Yield } from "../../../types";
+import { generateId } from "../../utility";
+import { MineableType, types } from "../../utility/mineable";
+import User from "../user";
+
 type MineableOptions = {
   type: string;
 }
 
-type MineableType = {
-  type: string;
-  level: number;
-  maxAmount: number;
-  itemYield: string;
-}
-
 class Mineable {
-  type: string;
-  amount: number;
-  level: number;
-  itemYield: string;
+  type: MineableType;
   id: string;
+
   constructor(mineableOptions?: MineableOptions) {
     if (mineableOptions) {
       // deconstruct the type from the options. 
-      const { type } = mineableOptions;
-      const types = this.typeMatrix();
-      const specifiedType = types.find((typeObj) => typeObj.type === type);
+      const { type } = mineableOptions
+      const specifiedType = types.find((typeObj) => typeObj.name === type);
       // if the specified type is in the type library, it can be used.
       if (specifiedType) {
-        this.type = type;
-        this.amount = Math.floor(Math.random() * specifiedType.maxAmount);
-        this.level = specifiedType.level;
-        this.itemYield = specifiedType.itemYield;
+        this.type = specifiedType;
         this.id = generateId();
         // if the specified type is not in the type library, it cannot be generated. 
       } else {
@@ -35,27 +26,32 @@ class Mineable {
       }
     } else {
       // random resource needs to be generated.
-      const types = this.typeMatrix();
       const randomIndex = Math.floor(Math.random() * types.length);
-      const { type, level, maxAmount, itemYield } = types[randomIndex];
-      this.type = type;
-      this.amount = Math.floor(Math.random() * maxAmount);
-      this.level = level;
-      this.itemYield = itemYield;
+      const randomType  = types[randomIndex];
+      this.type = randomType;
       this.id = generateId();
     }
   }
 
-  // create and include all possible types below. 
-  typeMatrix(): MineableType[] {
-    return [
-      { 
-        type: "BasicTransaction",
-        level: 0,
-        maxAmount: 10,
-        itemYield: "BasicDataPacket"
-      }
-    ]
+  async harvest(): Promise<{ xp: number; haul: Yield[] }> {
+    return new Promise((resolve, reject) => {
+      const haul: Yield[] = [];
+      this.type.yields.forEach((item) => {
+        const randomRoll: number = Math.random();
+        if (item.probabilityToLoot >= randomRoll) { 
+          haul.push(item);
+        }
+      });
+
+      const timeToComplete = this.type.timeToComplete;
+
+      setTimeout(() => {
+        resolve({
+          xp: this.type.xp,
+          haul
+        });
+      }, timeToComplete * 100);
+    });
   }
 }
 
