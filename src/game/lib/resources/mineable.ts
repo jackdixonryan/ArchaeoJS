@@ -1,4 +1,4 @@
-import { generateId } from "../../../utility"
+import { generateId } from "../../utility"
 type MineableOptions = {
   type: string;
 }

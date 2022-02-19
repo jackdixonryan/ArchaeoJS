@@ -2,7 +2,7 @@ import express, { Request, Response } from "express";
 import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
-import Mainframe from "../game/Mainframe";
+import Mainframe from "../game/lib/mainframe";
 
 (async function main() {
   console.log("Starting Archaeo API...");
